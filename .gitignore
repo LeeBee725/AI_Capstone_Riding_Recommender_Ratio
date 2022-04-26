@@ -1,3 +1,13 @@
+# Custom ignored file
+*.csv
+*.zip
+
+tresh/
+only_logs_with_user/
+log/
+.vscode/
+_old/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
