@@ -41,7 +41,8 @@ class Parser:
 		return list()
 
 	def __get_username(self):
-		return self.filePath.split('\\')[-2]
+		# return self.filePath.split('\\')[-2]
+		return self.filePath.split('\\')[-3]
 
 	# TODO:JUN need to refactoring
 	def __slice_file_to_word_size(self, wordSize: int) -> list[int]:
@@ -164,7 +165,12 @@ def get_speed_n_flags(data:int) -> tuple:
 	# NEED: speed에 대한 정확한 치환법 필요
 	speed = f"{data:08x}"[4:]
 	if speed == "ffff":
-		speed = -1
+		speed = float('nan')
+		return flag, speed
+	if speed == "fffe":
+		return flag, speed
+	speed = int(speed, base=16)
+	speed /= 256.0
 	# print(bytes.fromhex(f"{data:08x}"[4:]))
 	# speed = np.frombuffer(bytes.fromhex(f"{data:08x}"[4:]), dtype=np.float16)[0]
 	return flag, speed
