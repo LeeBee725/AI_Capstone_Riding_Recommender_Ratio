@@ -20,7 +20,6 @@ class CSVGenerator:
 	def get_users(self) -> list:
 		return listdir(self.dataDirPath)
 	
-	# TODO:JUN Trouble Shooting, OOM Problem
 	def generate_csv(self, csvFileName:str) -> None:
 		self.to_csv = self.__get_total_parsing_data_from_dirpath()
 		print("[***]Writing csv ...", end="")
@@ -65,9 +64,10 @@ class CSVGenerator:
 	def __get_n_users_log_file_paths(self, n:int) -> list[str]:
 		filePaths = []
 		dirTreeIterator = self.__get_directory_tree_iterator_without_root()
-		for _ in range(n):
+		while n > 0:
 			root, _, files = next(dirTreeIterator)
 			if self.__has_log(root):
+				n -= 1
 				filePaths.extend(os.path.join(root,file) for file in files if self.__is_log_file(file))
 		return filePaths
 
